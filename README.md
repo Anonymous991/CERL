@@ -1,4 +1,4 @@
-Anaonymous Codebase for Collaborative Evolutionary Reinforcement Learning for submission to ICML 2019
+Anonymous Codebase for Collaborative Evolutionary Reinforcement Learning for submission to ICML 2019
 
 #################################
           Code labels
