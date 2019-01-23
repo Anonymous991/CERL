@@ -52,4 +52,4 @@ where {} represents an inclusive discrete range: {10, 14} --> {10, 11, 12, 13, 1
 ######################
 
 All roll-outs including the evolutionary population and the roll-outs conducted by the learners run in
-parallel. They are distributed to 
+parallel. They are distributed across CPU cores and write ASYNCHRONOUSLY to the collective replay buffer object. Thus, slight variations in results were seen even with the same seed.
