@@ -22,12 +22,7 @@ class Learner:
 
 	def __init__(self, wwid, algo_name, state_dim, action_dim, actor_lr, critic_lr, gamma, tau, init_w = True, **td3args):
 		self.td3args = td3args; self.id = id
-
-		if algo_name == 'SAC':
-			self.algo = SAC(state_dim, action_dim, gamma, wwid)
-
-		else:
-			self.algo = Off_Policy_Algo(wwid, algo_name, state_dim, action_dim, actor_lr, critic_lr, gamma, tau, init_w)
+		self.algo = Off_Policy_Algo(wwid, algo_name, state_dim, action_dim, actor_lr, critic_lr, gamma, tau, init_w)
 
 
 		#LEARNER STATISTICS

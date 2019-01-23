@@ -20,27 +20,6 @@ class Buffer():
 		self.sT = None; self.nsT = None; self.aT = None; self.rT = None; self.doneT = None
 
 
-	# def push(self, s, ns, a, r, done): #f: FITNESS, t: TIMESTEP, done: DONE
-	# 	"""Add an experience to the buffer
-	# 		Parameters:
-	# 			s (ndarray): Current State
-	# 			ns (ndarray): Next State
-	# 			a (ndarray): Action
-	# 			r (ndarray): Reward
-	# 			done (ndarray): Done
-	# 		Returns:
-	# 			None
-	# 	"""
-	#
-	#
-	# 	if self.__len__() < self.capacity:
-	# 		self.s.append(None); self.ns.append(None); self.a.append(None); self.r.append(None); self.done.append(None);
-	#
-	# 	#Append new tuple
-	# 	ind = self.counter % self.capacity
-	# 	self.s[ind] = s; self.ns[ind] = ns; self.a[ind] = a; self.r[ind] = r; self.done[ind] = done
-	# 	self.counter += 1
-
 	def referesh(self):
 		"""Housekeeping
 			Parameters:

@@ -225,18 +225,10 @@ class SSNE:
 		self.gen+= 1; num_elitists = int(self.args.elite_fraction * len(fitness_evals))
 		if num_elitists < 2: num_elitists = 2
 
-		# #Update lineage
-		# for net_id, pop_id in enumerate(net_inds): self.lineage[pop_id] = (self.lineage[pop_id] * (self.lineage_depth-1) + fitness_evals[net_id])/(self.lineage_depth)
-		# lineage_fits = [self.lineage[i] for i in net_inds]
 
 		# Entire epoch is handled with indices; Index rank nets by fitness evaluation (0 is the best after reversing)
 		index_rank = self.list_argsort(fitness_evals); index_rank.reverse()
 		elitist_index = index_rank[:num_elitists]  # Elitist indexes safeguard
-
-		# #Lineage rankings to elitists
-		# lineage_rank = self.list_argsort(lineage_fits); lineage_rank.reverse()
-		# elitist_index = elitist_index + lineage_rank[:int(num_elitists)]
-
 
 		# Selection step
 		offsprings = self.selection_tournament(index_rank, num_offsprings=len(index_rank) - len(elitist_index) - len(migration), tournament_size=3)

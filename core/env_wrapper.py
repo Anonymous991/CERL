@@ -45,8 +45,6 @@ class EnvironmentWrapper:
 				info (None): Template from OpenAi gym (doesnt have anything)
 		"""
 
-		if self.ALGO == "SAC": action = (action + 1.0) / 2.0  # [-1, 1] => [0, 1]
-
 		action = self.action_low + action * (self.action_high - self.action_low)
 		return self.env.step(action)
 

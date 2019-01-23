@@ -26,7 +26,6 @@ def ucb(allocation_size, portfolio, c):
 	ucb_scores = [(values[i]) + c * math.sqrt( math.log(total_visit)/visit_counts[i]) for i in range(len(portfolio))]
 
 
-
 	########## Use UCB scores to perform probabilistic resource allocation (different from making one choice) ##########
 	allocation = roulette_wheel(ucb_scores, allocation_size)
 

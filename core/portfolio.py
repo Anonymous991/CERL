@@ -97,8 +97,6 @@ def initialize_portfolio(portfolio, args, genealogy, portfolio_id):
 			Learner(wwid, 'TD3', args.state_dim, args.action_dim, actor_lr=1e-3, critic_lr=1e-3, gamma=1.0, tau=5e-3, init_w=True,
 			        **td3args))
 
-
-
 	if portfolio_id == 101:
 		td3args = {'policy_noise': 0.2, 'policy_noise_clip': 0.5, 'policy_ups_freq': 2, 'action_low': args.action_low, 'action_high': args.action_high}
 

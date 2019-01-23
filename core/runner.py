@@ -39,25 +39,16 @@ def rollout_worker(id, task_pipe, result_pipe, is_noise, data_bucket, model_buck
 		state = utils.to_tensor(np.array(state)).unsqueeze(0)
 		while True:  # unless done
 
-			if ALGO == "SAC":
-				action, log_prob, x_t, mean, log_std = net.evaluate(state)
-				if not is_noise:
-					action = torch.tanh(mean)
-			else:
-				action = net.forward(state)
-
+			action = net.forward(state)
 			action = utils.to_numpy(action)
-			if is_noise and ALGO != "SAC":
+			if is_noise:
 				action = (action + np.random.normal(0, noise_std, size=env.env.action_space.shape[0])).clip(env.env.action_space.low, env.env.action_space.high)
 
 			next_state, reward, done, info = env.step(action.flatten())  # Simulate one step in environment
 
 
-
 			next_state = utils.to_tensor(np.array(next_state)).unsqueeze(0)
 			fitness += reward
-
-			if ALGO == "SAC": reward = reward * 20
 
 			# If storing transitions
 			if data_bucket != None: #Skip for test set

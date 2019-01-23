@@ -27,10 +27,8 @@ parser.add_argument('-buffer_gpu', type=str2bool, help='#Store buffer in GPU?', 
 parser.add_argument('-portfolio', type=int, help='Portfolio ID',  default=10)
 parser.add_argument('-total_steps', type=float, help='#Total steps in the env in millions ',  default=2)
 parser.add_argument('-batchsize', type=int, help='Seed',  default=256)
-#parser.add_argument('-algo', type=str, help='#SAC VS TD3 ',  default='')
 
 
-#ALGO = vars(parser.parse_args())['algo']
 POP_SIZE = vars(parser.parse_args())['pop_size']
 BATCHSIZE = vars(parser.parse_args())['batchsize']
 ROLLOUT_SIZE = vars(parser.parse_args())['rollout_size']
@@ -48,10 +46,7 @@ os.environ["CUDA_VISIBLE_DEVICES"]=str(GPU_DEVICE)
 if PORTFOLIO_ID == 11 or PORTFOLIO_ID == 12 or PORTFOLIO_ID == 13 or PORTFOLIO_ID == 14 or PORTFOLIO_ID == 101 or PORTFOLIO_ID == 102: ISOLATE_PG = True
 else:
     ISOLATE_PG = False
-
-	ALGO = "TD3"
-
-
+ALGO = "TD3"
 SAVE = True
 TEST_SIZE=10
 
@@ -77,14 +72,13 @@ class Parameters:
 		self.buffer_gpu = BUFFER_GPU
 		self.rollout_size = ROLLOUT_SIZE #Size of learner rollouts
 
-		#SAC stuff
-		self.hidden_size = 256
-
 		#NeuroEvolution stuff
 		self.pop_size = POP_SIZE
 		self.elite_fraction = 0.2
 		self.crossover_prob = 0.15
 		self.mutation_prob = 0.90
+
+		#######unused########
 		self.extinction_prob = 0.005  # Probability of extinction event
 		self.extinction_magnituide = 0.5  # Probabilty of extinction for each genome, given an extinction event
 		self.weight_magnitude_limit = 10000000
@@ -213,14 +207,9 @@ class CERL_Agent:
 
 		#Sync all learners actor to cpu (rollout) actor
 		for i, learner in enumerate(self.portfolio):
-			if ALGO == "SAC":
-				learner.algo.policy.cpu()
-				utils.hard_update(self.rollout_bucket[i], learner.algo.policy)
-				learner.algo.policy.cuda()
-			else:
-				learner.algo.actor.cpu()
-				utils.hard_update(self.rollout_bucket[i], learner.algo.actor)
-				learner.algo.actor.cuda()
+			learner.algo.actor.cpu()
+			utils.hard_update(self.rollout_bucket[i], learner.algo.actor)
+			learner.algo.actor.cuda()
 
 		# Start Learner rollouts
 		for rollout_id, learner_id in enumerate(self.allocation):
@@ -308,17 +297,6 @@ class CERL_Agent:
 			test_mean, test_std = None, None
 
 
-		# #Save champion periodically
-		# if gen % 5 == 0 and SAVE:
-		# 	torch.save(self.pop[champ_index].state_dict(), self.args.savefolder + ENV_NAME+'_champ'+SAVETAG)
-		# 	print("Champ saved with score ", '%.2f'%max(all_fitness))
-
-
-		# if gen % 20 == 0 and SAVE:
-		# 	torch.save(self.pop[self.evolver.lineage.index(max(self.evolver.lineage))].state_dict(), self.args.model_save + 'eugenic_champ'+SAVE_TAG)
-		# 	print("Eugenic Champ saved with score ", '%.2f'%max(self.evolver.lineage))
-
-
 		#NeuroEvolution's probabilistic selection and recombination step
 		if not ISOLATE_PG:
 			if gen % 5 == 0:
@@ -349,7 +327,7 @@ if __name__ == "__main__":
 	if ISOLATE_PG: SAVETAG = SAVETAG + '_pg'
 
 	frame_tracker = utils.Tracker(args.savefolder, ['score_'+ENV_NAME+SAVETAG], '.csv')  #Tracker class to log progress
-	max_tracker = utils.Tracker(args.aux_folder, ['pop_max_score_'+ENV_NAME+SAVETAG], '.csv')  #Tracker class to log progress
+	max_tracker = utils.Tracker(args.aux_folder, ['pop_max_score_'+ENV_NAME+SAVETAG], '.csv')  #Tracker class to log progress FOR MAX (NOT REPORTED)
 
 	#Set seeds
 	torch.manual_seed(args.seed); np.random.seed(args.seed); random.seed(args.seed)

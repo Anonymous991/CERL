@@ -46,3 +46,10 @@ python main.py -env Hopper-v2 -portfolio {100,102} -total_steps 5 -seed {2018,20
 
 where {} represents an inclusive discrete range: {10, 14} --> {10, 11, 12, 13, 14}
 
+
+######################
+        NOTE
+######################
+
+All roll-outs including the evolutionary population and the roll-outs conducted by the learners run in
+parallel. They are distributed to 
