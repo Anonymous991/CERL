@@ -1,4 +1,4 @@
-from core.off_policy_algo import Off_Policy_Algo, SAC
+from core.off_policy_algo import Off_Policy_Algo
 
 
 

@@ -1,6 +1,6 @@
 import numpy as np, os, time, random, torch, sys
 from core.neuroevolution import SSNE
-from core.models import Actor, GaussianPolicy
+from core.models import Actor
 from core import mod_utils as utils
 from core.mod_utils import str2bool
 from core.ucb import ucb
