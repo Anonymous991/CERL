@@ -1,4 +1,4 @@
-
+import torch
 
 # Rollout evaluate an agent in a complete game
 def rollout_worker(id, task_pipe, result_pipe, data_bucket, model_bucket):
@@ -23,6 +23,11 @@ def rollout_worker(id, task_pipe, result_pipe, data_bucket, model_bucket):
 		identifier = task_pipe.recv()  # Wait until a signal is received  to start rollout
 		if identifier == 'TERMINATE': exit(0) #Kill yourself
 		print('Received', identifier)
+
+		net = model_bucket[int(identifier)]
+		dummy = torch.ones((10, 100))
+		for i in range(100):
+			action = net.forward(dummy)
 
 
 		# Send back id, fitness, total length and shaped fitness using the result pipe

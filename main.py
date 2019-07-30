@@ -63,7 +63,7 @@ class CERL_Agent:
 		################ START ROLLOUTS ##############
 
 		for id, actor in enumerate(self.pop):
-			self.evo_task_pipes[id][0].send(str(id))
+			self.evo_task_pipes[id][0].send(id)
 
 
 
