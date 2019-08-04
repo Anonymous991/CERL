@@ -24,7 +24,7 @@ parser.add_argument('-gradperstep', type=float, help='#Gradient step per env ste
 parser.add_argument('-savetag', type=str, help='#Tag to append to savefile',  default='')
 parser.add_argument('-gpu_id', type=int, help='#GPU ID ',  default=0)
 parser.add_argument('-buffer_gpu', type=str2bool, help='#Store buffer in GPU?',  default=0)
-parser.add_argument('-portfolio', type=int, help='Portfolio ID',  default=10)
+parser.add_argument('-portfolio', type=int, help='Portfolio ID',  default=22)
 parser.add_argument('-total_steps', type=float, help='#Total steps in the env in millions ',  default=2)
 parser.add_argument('-batchsize', type=int, help='Seed',  default=256)
 
@@ -66,7 +66,7 @@ class Parameters:
 		self.algo = ALGO
 
 		self.batch_size = BATCHSIZE #Batch size
-		self.noise_std = 0.1 #Gaussian noise exploration std
+		self.noise_std = 0.01 #Gaussian noise exploration std
 		self.ucb_coefficient = 0.9 #Exploration coefficient in UCB
 		self.gradperstep = GRADPERSTEP
 		self.buffer_gpu = BUFFER_GPU
